@@ -14,12 +14,11 @@ const app = express();
 const allowedOrigins = [
     "http://localhost:5173",
     "https://kambaz-react-web-app-cs5610-sp25-qyl.netlify.app",
-    "https://a5--kambaz-react-web-app-cs5610-sp25-qyl.netlify.app"
   ];
   
   app.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin) || origin.endsWith(".netlify.app")) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS: " + origin));
@@ -27,6 +26,7 @@ const allowedOrigins = [
     },
     credentials: true,
   }));
+  
   
 
 const sessionOptions = {
