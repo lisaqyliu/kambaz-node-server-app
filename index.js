@@ -11,10 +11,23 @@ import EnrollmentRoutes from "./Kambaz/Enrollments/routes.js";
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.NETLIFY_URL || "http://localhost:5173",
-  credentials: true
-}));
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://kambaz-react-web-app-cs5610-sp25-qyl.netlify.app",
+    "https://a5--kambaz-react-web-app-cs5610-sp25-qyl.netlify.app"
+  ];
+  
+  app.use(cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
+    credentials: true,
+  }));
+  
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
