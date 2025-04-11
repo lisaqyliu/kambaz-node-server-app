@@ -13,10 +13,10 @@ export function enrollUserInCourse(userId, courseId) {
   return newEnrollment;
 }
 
-export function deleteEnrollmentByUserAndCourse(userId, courseId) {
+export function deleteEnrollment(enrollmentId) {
   const { enrollments } = Database;
-  Database.enrollments = enrollments.filter(
-    (e) => !(e.user === userId && e.course === courseId)
-  );
+  Database.enrollments = enrollments.filter((e) => e._id !== enrollmentId);
   return { status: "deleted" };
 }
+
+

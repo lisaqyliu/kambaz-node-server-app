@@ -9,12 +9,22 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-session": "^1.18.1",
+    "mongoose": "^8.13.2",
     "uuid": "^11.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lisaqyliu/kambaz-node-server-app.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/lisaqyliu/kambaz-node-server-app/issues"
+  },
+  "homepage": "https://github.com/lisaqyliu/kambaz-node-server-app#readme",
+  "description": ""
 }
