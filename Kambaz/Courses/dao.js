@@ -14,14 +14,14 @@ export async function findCoursesForEnrolledUser(userId) {
 }
 export async function createCourse(course) {
   const newCourse = { ...course, _id: uuidv4() };
-  return await model.create(newCourse);
+  return await CourseModel.create(newCourse);
 }
 export async function deleteCourse(courseId) {
-    await model.findByIdAndDelete(courseId);
+    await CourseModel.findByIdAndDelete(courseId);
     return { status: "deleted" };
 }
 export async function updateCourse(courseId, courseUpdates) {
-    const updatedCourse = await model.findByIdAndUpdate(courseId, courseUpdates, {
+    const updatedCourse = await CourseModel.findByIdAndUpdate(courseId, courseUpdates, {
       new: true,
     });
     return updatedCourse;
