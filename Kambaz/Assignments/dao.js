@@ -1,17 +1,12 @@
 import model from "./model.js";
 
 export const createAssignment = async (assignment) => {
-  const properAssignment = {
-    ...assignment,
-    module: new mongoose.Types.ObjectId(assignment.module),
-  };
-  const created = await model.create(properAssignment);
+  const created = await model.create(assignment); 
   return created.toObject();
 };
 
-
 export const findAssignmentsForModule = async (moduleId) => {
-  return await model.find({ module: new mongoose.Types.ObjectId(moduleId) });
+  return await model.find({ module: moduleId });
 };
 
 export const updateAssignment = async (assignmentId, updates) => {
