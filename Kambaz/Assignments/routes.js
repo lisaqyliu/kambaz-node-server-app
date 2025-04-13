@@ -6,12 +6,16 @@ export default function AssignmentRoutes(app) {
       const { moduleId } = req.params;
       const assignment = { ...req.body, module: moduleId };
       const newAssignment = await dao.createAssignment(assignment);
-      res.send(newAssignment);
+  
+      console.log("✅ Created assignment:", newAssignment);
+  
+      res.send(newAssignment.toObject ? newAssignment.toObject() : newAssignment);
     } catch (err) {
-      console.error("Error creating assignment:", err);
+      console.error("❌ Error creating assignment:", err);
       res.status(500).send({ error: "Failed to create assignment" });
     }
   });
+  
 
   app.get("/api/modules/:moduleId/assignments", async (req, res) => {
     try {
