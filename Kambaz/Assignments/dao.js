@@ -1,8 +1,10 @@
 import model from "./model.js";
 
 export const createAssignment = async (assignment) => {
-  return await model.create(assignment);  
+  const created = await model.create(assignment);
+  return created.toObject(); 
 };
+
 
 export const findAssignmentsForModule = async (moduleId) => {
   return await model.find({ module: moduleId });
