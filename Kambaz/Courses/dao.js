@@ -4,7 +4,7 @@ import EnrollmentModel from "../Enrollments/model.js";
 
 
 export async function findAllCourses() {
-  return await model.find();
+  return await CourseModel.find();
 }
 export async function findCoursesForEnrolledUser(userId) {
     const enrollments = await EnrollmentModel.find({user: userId});
