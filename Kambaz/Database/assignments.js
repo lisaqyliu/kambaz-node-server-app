@@ -120,6 +120,18 @@ export default [
         "untilDate": "2024-06-03T12:00"
     },
     {
+        _id: "A114",
+        title: "React Component Assignment",
+        course: "1234",
+        module: "M101",
+        description: "Build and submit a React component using functional components and props.",
+        points: 100,
+        dueDate: "2024-05-13T23:59",
+        availableDate: "2024-05-06T00:00",
+        untilDate: "2024-05-20T12:00"
+    },
+    
+    {
         "_id": "A201",
         "title": "HTML & CSS Styling Exercise",
         "course": "2345",

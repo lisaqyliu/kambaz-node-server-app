@@ -1,4 +1,6 @@
 import * as dao from "./dao.js";
+import model from "./model.js";
+import mongoose from "mongoose";
 
 export default function AssignmentRoutes(app) {
   app.post("/api/modules/:moduleId/assignments", async (req, res) => {
@@ -21,13 +23,27 @@ export default function AssignmentRoutes(app) {
     try {
       const { moduleId } = req.params;
       const assignments = await dao.findAssignmentsForModule(moduleId);
-      res.send(assignments);
+      console.log("🎯 Original assignments from DAO:", assignments);
+      
+      // Ensure IDs are preserved in the response
+      const processedAssignments = assignments.map(assignment => {
+        if (!assignment._id) {
+          console.error("⚠️ Assignment missing ID:", assignment);
+        }
+        return {
+          ...assignment,
+          _id: assignment._id // Keep the ID as is since it's already a string
+        };
+      });
+      
+      console.log("📤 Final response assignments:", processedAssignments);
+      res.json(processedAssignments);
     } catch (err) {
-      console.error("Error fetching assignments:", err);
+      console.error("❌ Error fetching assignments:", err);
       res.status(500).send({ error: "Failed to fetch assignments" });
     }
   });
-
+  
   app.put("/api/assignments/:assignmentId", async (req, res) => {
     try {
       const { assignmentId } = req.params;
@@ -54,11 +70,51 @@ export default function AssignmentRoutes(app) {
     try {
       const { courseId } = req.params;
       const assignments = await dao.findAssignmentsByCourse(courseId);
+      console.log("✅ Course assignments:", assignments); 
       res.send(assignments);
     } catch (err) {
       console.error("Error fetching assignments by course:", err);
       res.status(500).send({ error: "Failed to fetch assignments by course" });
     }
   });
+  
+
+  app.get("/api/modules/:moduleId/assignments/:assignmentId", async (req, res) => {
+    try {
+      const { moduleId, assignmentId } = req.params;
+      const assignment = await dao.findAssignmentByIdAndModule(assignmentId, moduleId);
+      if (!assignment) {
+        return res.status(404).send({ error: "Assignment not found" });
+      }
+      res.send(assignment);
+    } catch (err) {
+      console.error("Error fetching specific assignment:", err);
+      res.status(500).send({ error: "Failed to fetch assignment" });
+    }
+  });
+
+  app.get("/api/assignments/:assignmentId", async (req, res) => {
+    try {
+      const assignment = await dao.findAssignmentById(req.params.assignmentId); // ✅ use DAO here
+      if (!assignment) {
+        return res.status(404).send({ error: "Assignment not found" });
+      }
+      res.send(assignment);
+    } catch (err) {
+      console.error("Error fetching assignment by ID:", err);
+      res.status(500).send({ error: "Failed to fetch assignment" });
+    }
+  });
+  app.get("/api/debug/assignments", async (req, res) => {
+    const results = await model.find({ module: "M101" });
+    res.json(results);
+  });
+
+  app.get("/api/debug/raw", async (req, res) => {
+    const connection = mongoose.connection;
+    const results = await connection.db.collection("assignments").find({ module: "M101" }).toArray();
+    res.json(results);
+  });
+  
 }
 
