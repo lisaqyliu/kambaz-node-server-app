@@ -9,11 +9,11 @@ export default function AssignmentRoutes(app) {
       const assignment = { ...req.body, module: moduleId };
       const newAssignment = await dao.createAssignment(assignment);
   
-      console.log("✅ Created assignment:", newAssignment);
+      console.log("Created assignment:", newAssignment);
   
       res.send(newAssignment.toObject ? newAssignment.toObject() : newAssignment);
     } catch (err) {
-      console.error("❌ Error creating assignment:", err);
+      console.error("Error creating assignment:", err);
       res.status(500).send({ error: "Failed to create assignment" });
     }
   });
@@ -25,21 +25,21 @@ export default function AssignmentRoutes(app) {
       const assignments = await dao.findAssignmentsForModule(moduleId);
       console.log("🎯 Original assignments from DAO:", assignments);
       
-      // Ensure IDs are preserved in the response
+      
       const processedAssignments = assignments.map(assignment => {
         if (!assignment._id) {
           console.error("⚠️ Assignment missing ID:", assignment);
         }
         return {
           ...assignment,
-          _id: assignment._id // Keep the ID as is since it's already a string
+          _id: assignment._id
         };
       });
       
       console.log("📤 Final response assignments:", processedAssignments);
       res.json(processedAssignments);
     } catch (err) {
-      console.error("❌ Error fetching assignments:", err);
+      console.error("Error fetching assignments:", err);
       res.status(500).send({ error: "Failed to fetch assignments" });
     }
   });
@@ -70,7 +70,7 @@ export default function AssignmentRoutes(app) {
     try {
       const { courseId } = req.params;
       const assignments = await dao.findAssignmentsByCourse(courseId);
-      console.log("✅ Course assignments:", assignments); 
+      console.log("Course assignments:", assignments); 
       res.send(assignments);
     } catch (err) {
       console.error("Error fetching assignments by course:", err);
@@ -95,7 +95,7 @@ export default function AssignmentRoutes(app) {
 
   app.get("/api/assignments/:assignmentId", async (req, res) => {
     try {
-      const assignment = await dao.findAssignmentById(req.params.assignmentId); // ✅ use DAO here
+      const assignment = await dao.findAssignmentById(req.params.assignmentId); 
       if (!assignment) {
         return res.status(404).send({ error: "Assignment not found" });
       }

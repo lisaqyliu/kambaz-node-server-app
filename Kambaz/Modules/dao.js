@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 export async function createModule(module) {
   const newModule = { ...module, _id: uuidv4(), lessons: [] };
   const savedModule = await model.create(newModule);
-  console.log("✅ Created Module:", savedModule);
+  console.log("Created Module:", savedModule);
   return savedModule;
 }
 

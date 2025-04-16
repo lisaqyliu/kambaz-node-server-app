@@ -3,17 +3,17 @@ import mongoose from "mongoose";
 
 export const createAssignment = async (assignment) => {
   try {
-    // Generate a consistent ID format if not provided
+    
     if (!assignment._id) {
       assignment._id = `A${assignment.module.substring(1)}${Math.floor(Math.random() * 900) + 100}`;
-      console.log("🆔 Generated assignment ID:", assignment._id);
+      console.log("Generated assignment ID:", assignment._id);
     }
 
     const created = await model.create(assignment);
-    console.log("✅ Created assignment:", created);
+    console.log(" Created assignment:", created);
     return created.toObject();
   } catch (error) {
-    console.error("❌ Error creating assignment:", error);
+    console.error(" Error creating assignment:", error);
     throw error;
   }
 };
@@ -39,10 +39,10 @@ export const findAssignmentsForModule = async (moduleId) => {
       };
     });
 
-    console.log("✅ Processed assignments:", assignments);
+    console.log("Processed assignments:", assignments);
     return assignments;
   } catch (error) {
-    console.error("❌ Error in findAssignmentsForModule:", error);
+    console.error(" Error in findAssignmentsForModule:", error);
     throw error;
   }
 };
@@ -62,7 +62,7 @@ export const findAssignmentByIdAndModule = async (assignmentId, moduleId) => {
       _id: assignment._id.toString()
     };
   } catch (error) {
-    console.error("❌ Error finding assignment:", error);
+    console.error("Error finding assignment:", error);
     throw error;
   }
 };
@@ -76,7 +76,7 @@ export const updateAssignment = async (assignmentId, updates) => {
     );
     return updated ? updated.toObject() : null;
   } catch (error) {
-    console.error("❌ Error updating assignment:", error);
+    console.error("Error updating assignment:", error);
     throw error;
   }
 };
@@ -86,7 +86,7 @@ export const deleteAssignment = async (assignmentId) => {
     const deleted = await model.findByIdAndDelete(assignmentId);
     return deleted ? deleted.toObject() : null;
   } catch (error) {
-    console.error("❌ Error deleting assignment:", error);
+    console.error("Error deleting assignment:", error);
     throw error;
   }
 };
@@ -102,7 +102,7 @@ export const findAssignmentsByCourse = async (courseId) => {
       };
     });
   } catch (error) {
-    console.error("❌ Error finding course assignments:", error);
+    console.error("Error finding course assignments:", error);
     throw error;
   }
 }; 

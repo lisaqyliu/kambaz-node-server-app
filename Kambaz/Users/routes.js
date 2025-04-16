@@ -59,10 +59,10 @@ export default function UserRoutes(app) {
     req.session.currentUser = newUser;
     req.session.save((err) => {
       if (err) {
-        console.error("❌ Session save error on signup:", err);
+        console.error(" Session save error on signup:", err);
         return res.sendStatus(500);
       }
-      console.log("✅ SESSION AFTER SIGNUP:", req.session);
+      console.log("SESSION AFTER SIGNUP:", req.session);
       res.json(newUser);
     });
   };
@@ -79,14 +79,14 @@ export default function UserRoutes(app) {
       req.session.currentUser = user;
       req.session.save((err) => {
         if (err) {
-          console.error("❌ Session save error:", err);
+          console.error("Session save error:", err);
           return res.sendStatus(500);
         }
-        console.log("✅ SESSION AFTER SIGNIN:", req.session);
+        console.log("SESSION AFTER SIGNIN:", req.session);
         res.json(user);
       });
     } else {
-      console.warn("🚫 Invalid credentials!");
+      console.warn("Invalid credentials!");
       res.status(401).json({ message: "Unable to login. Try again later." });
     }
   };
